@@ -1,38 +1,29 @@
-import express from 'express';
-import path from 'path';
-import fetch from 'node-fetch';
-import bodyParser from 'body-parser';
-import session from 'express-session';
-import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import bcrypt from 'bcrypt';
-import pg from 'pg';
-
-
-import postgres from 'postgres'
-const connectionString = process.env.DATABASE_URL;
-const sql = postgres(connectionString)
-export default sql
+const express = require('express');
+const path = require('path');
+const fetch = require('node-fetch');
+const bodyParser = require('body-parser');
+const { Client } = require('pg');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+require('dotenv').config();
 
 
 
-dotenv.config();
+const db = new Client({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+});
 
-const { Client } = pg;
-
-
-const db = new Client({ connectionString });
-await db.connect();
+db.connect();
 
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
