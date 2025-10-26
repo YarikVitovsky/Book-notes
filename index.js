@@ -10,9 +10,10 @@ import bcrypt from 'bcrypt';
 import pg from 'pg';
 
 
+import postgres from 'postgres'
 const connectionString = process.env.DATABASE_URL;
-const sql = pg(connectionString);
-export default sql;
+const sql = postgres(connectionString)
+export default sql
 
 
 
