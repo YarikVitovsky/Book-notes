@@ -22,3 +22,14 @@ CREATE TABLE notes (
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO books (name, author, isbn, rating)
+VALUES
+('12 Rules for Life', 'Jordan B. Peterson', '9780345816023', 8),
+('Can''t Hurt Me', 'David Goggins', '9781544512280', 9),
+('Never Finished', 'David Goggins', '9781544534077', 9),
+('Gulag Archipelago', 'Alexander Solzhenitsyn', '9780061253805', 10),
+('The Picture of Dorian Gray', 'Oscar Wilde', '9780141439570', 7),
+('Crime and Punishment', 'Fyodor Dostoevsky', '9780140449136', 8),
+('Modern Man in Search of a Soul', 'Carl Jung', '9780156612067', 8),
+('Man''s Search for Meaning', 'Viktor Frankl', '9780807014295', 10);
