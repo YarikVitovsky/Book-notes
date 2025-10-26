@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= book.title %> | Book Notes
+    </title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+
+<body>
+    <header>
+        <div class="top-nav">
+            <% if (typeof user !=='undefined' && user) { %>
+                <span class="user-icon" title="<%= user.username %>">👤</span>
+                <% } else { %>
+                    <a href="/login">Login</a>
+                    <a href="/login">Register</a>
+                    <% } %>
+        </div>
+        <h1>
+            <%= book.title %>
+        </h1>
+        <p>by <%= book.author %>
+        </p>
+    </header>
+    <div class="container">
+        <a href="/"
+            style="display:inline-block; margin-bottom:1rem; text-decoration:none; color:#222; background:#f2f2f2; padding:8px 18px; border-radius:5px;">←
+            Back to Home</a>
+        <div style="text-align:center;">
+            <img src="<%= book.coverUrl %>" alt="Book cover"
+                style="max-width:180px; max-height:260px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.07);" />
+        </div>
+        <div>
+            <strong>Date Read:</strong>
+            <%= book.dateRead %><br>
+                <strong>Rating:</strong>
+                <%= book.rating %>/10
+        </div>
+        <hr>
+        <h2>Notes</h2>
+        <% if (notes.length===0) { %>
+            <p>No notes yet.</p>
+            <% } else { %>
+                <% notes.forEach(function(note) { %>
+                    <div class="note">
+                        <strong>
+                            <%= note.username %>:
+                        </strong>
+                        <span>
+                            <%= note.content %>
+                        </span>
+                    </div>
+                    <% }); %>
+                        <% } %>
+                            <!-- Note form for logged-in users -->
+                            <% if (user) { %>
+                                <form method="POST" action="/book/<%= book.id %>/note" style="margin-top:1.5rem;">
+                                    <textarea name="content" rows="3" style="width:100%;"
+                                        placeholder="Leave your note..." required></textarea>
+                                    <button type="submit" style="margin-top:0.5rem;">Add Note</button>
+                                </form>
+                                <% } else { %>
+                                    <p><a href="/login">Login</a> to leave a note.</p>
+                                    <% } %>
+    </div>
+</body>
+
+</html>

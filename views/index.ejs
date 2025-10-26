@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Book Notes</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+
+<body>
+    <header>
+        <div class="top-nav">
+            <% if (typeof user !=='undefined' && user) { %>
+                <span class="user-icon" title="<%= user.username %>">👤</span>
+                <% } else { %>
+                    <a href="/login">Login</a>
+                    <a href="/login">Register</a>
+                    <% } %>
+        </div>
+        <h1>📚 My Book Notes</h1>
+        <p>Track, rate, and remember the best ideas from your reading.</p>
+    </header>
+    <div class="container">
+        <!-- Removed Add Book button -->
+        <form class="sort-bar" method="GET" action="/">
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort" onchange="this.form.submit()">
+                <option value="recency" <% if (sort==='recency' ) { %>selected<% } %>>Recency</option>
+                <option value="rating" <% if (sort==='rating' ) { %>selected<% } %>>Rating</option>
+                <option value="title" <% if (sort==='title' ) { %>selected<% } %>>Title</option>
+            </select>
+        </form>
+        <div class="book-list">
+            <% books.forEach(function(book) { %>
+                <div class="book-card">
+                    <a href="/book/<%= book.id %>" style="text-decoration:none; color:inherit;">
+                        <div style="text-align:center; margin-bottom: 1rem;">
+                            <img src="<%= book.coverUrl %>" alt="Book cover"
+                                style="max-width:120px; max-height:180px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.07);" />
+                        </div>
+                        <div class="book-title">
+                            <%= book.name %>
+                        </div>
+                        <div class="book-meta">
+                            <span>by <%= book.author %></span> |
+                            <span>Read: <%= book.dateRead %></span> |
+                            <span class="book-rating">Rating: <%= book.rating %>/10</span>
+                        </div>
+                    </a>
+                </div>
+                <% }); %>
+        </div>
+    </div>
+</body>
+
+</html>
